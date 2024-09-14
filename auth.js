@@ -16,7 +16,8 @@ export const {
                 if (credentials == null) return null;
 
                 try {
-                    const response = await login(credentials);            
+                    const response = await login(credentials);      
+                    console.log(response);      
                     if (response.access_token) {
                         return {
                             accessToken: response.access_token,

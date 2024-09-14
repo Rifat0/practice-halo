@@ -1,5 +1,6 @@
 "use client";
 
+import { login } from '@/lib/getData';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -48,19 +49,7 @@ export function LoginForm() {
   }
 
   const checkApi = async () => {
-    let response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/auth/login`, {
-      cache: "no-store",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        email: 'test@email.com',
-        password: '123456',
-      }),
-    });
-    let resData = await response.json();
+    let response = await login();
     console.log(resData);
   }
 

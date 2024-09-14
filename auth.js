@@ -16,11 +16,11 @@ export const {
                 if (credentials == null) return null;
 
                 try {
-                    const response = await login(credentials);      
+                    const response = await login(credentials);
                     console.log(response);      
-                    if (response.access_token) {
+                    if (response.token) {
                         return {
-                            accessToken: response.access_token,
+                            accessToken: response.token,
                             accessTokenExpires: response.expires_in
                         };
                     } else {

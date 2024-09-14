@@ -17,6 +17,7 @@ export default function LoginPage() {
           <div className="login-card login-dark">
             <div>
               <div className="login-main">
+                {process.env.NEXT_PUBLIC_BACK_END_URL}
                 <LoginForm />
               </div>
             </div>

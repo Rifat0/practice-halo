@@ -47,7 +47,22 @@ export function LoginForm() {
     }
   }
 
+  const checkApi = async () => {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/test`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json',
+      },
+    });
+    let resData = await response.json();
+    console.log(resData);
+  }
+
   return (
+    <>
+      <button onClick={checkApi}>Check API</button>
+      {`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/test`}
     <form className="theme-form row" onSubmit={handleSubmit(onSubmit)}>
       <h4>Sign in to your account</h4>
       <p>Enter your email & password to login</p>
@@ -93,5 +108,7 @@ export function LoginForm() {
         </div>
       </div>
     </form>
+
+    </>
   );
 }

@@ -1,4 +1,11 @@
 "use client";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  Search,
+} from "feather-icons-react";
 
 import {
   flexRender,
@@ -8,7 +15,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Search } from "feather-icons-react";
 import * as React from "react";
 
 export function DataTable({ columns, data, searchColumn }) {
@@ -27,7 +33,7 @@ export function DataTable({ columns, data, searchColumn }) {
     state: {
       sorting,
       columnFilters,
-    }
+    },
   });
 
   return (
@@ -36,13 +42,14 @@ export function DataTable({ columns, data, searchColumn }) {
         <div className="row">
           <div className="col-md-10">
             <label>
-              <select className="form-select form-select-lg"
+              <select
+                className="form-select form-select-lg"
                 value={table.getState().pagination.pageSize}
-                onChange={e => {
-                  table.setPageSize(Number(e.target.value))
+                onChange={(e) => {
+                  table.setPageSize(Number(e.target.value));
                 }}
               >
-                {[10, 20, 30, 40, 50].map(pageSize => (
+                {[10, 20, 30, 40, 50].map((pageSize) => (
                   <option key={pageSize} value={pageSize}>
                     Show {pageSize}
                   </option>
@@ -53,7 +60,7 @@ export function DataTable({ columns, data, searchColumn }) {
           <div className="col-md-2">
             <div className="input-group input-xs">
               <span className="input-group-text">
-                <Search />
+                <Search size="20" />
               </span>
               <input
                 className="form-control"
@@ -61,7 +68,9 @@ export function DataTable({ columns, data, searchColumn }) {
                 type="search"
                 value={table.getColumn(searchColumn)?.getFilterValue() ?? ""}
                 onChange={(event) =>
-                  table.getColumn(searchColumn)?.setFilterValue(event.target.value)
+                  table
+                    .getColumn(searchColumn)
+                    ?.setFilterValue(event.target.value)
                 }
               />
             </div>
@@ -70,64 +79,81 @@ export function DataTable({ columns, data, searchColumn }) {
       </div>
 
       <table className=" table table-striped table-hover">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <th key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </th>
-                  );
-                })}
+        <thead>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <th key={header.id} style={{ width: header.getSize() }}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </th>
+                );
+              })}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <tr key={row.id} data-state={row.getIsSelected() && "selected"}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
               </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <tr key={row.id} data-state={row.getIsSelected() && "selected"}>
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={columns.length} className="text-center">
-                  No data available.
-                </td>
-              </tr>
-            )}
-          </tbody>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={columns.length} className="text-center">
+                No data available.
+              </td>
+            </tr>
+          )}
+        </tbody>
       </table>
 
       <div className="items-center justify-end py-3">
         <div className="row">
           <div className="col-md-6 mt-2">
             <h5 className="f-w-400">
-              Showing {table.getRowModel().rows.length.toLocaleString()} of{' '}
+              Showing {table.getRowModel().rows.length.toLocaleString()} of{" "}
               {table.getRowCount().toLocaleString()} entries
             </h5>
           </div>
 
           <div className="col-md-6">
             <ul className="pagination pagination-primary justify-content-end">
-              <li className= {`page-item ${table.getCanPreviousPage() === false ? `disabled`: null }`} >
-                <a className="page-link" tabIndex="-1" onClick={() => table.firstPage()} >First</a>
+              <li
+                className={`page-item ${
+                  table.getCanPreviousPage() === false ? `disabled` : null
+                }`}
+              >
+                <a
+                  className="page-link"
+                  tabIndex="-1"
+                  onClick={() => table.firstPage()}
+                >
+                  <ChevronsLeft size="15" />
+                </a>
               </li>
-              <li className= {`page-item ${table.getCanPreviousPage() === false ? `disabled`: null }`} >
-                <a className="page-link" tabIndex="-1" onClick={() => table.previousPage()} >Previous</a>
+              <li
+                className={`page-item ${
+                  table.getCanPreviousPage() === false ? `disabled` : null
+                }`}
+              >
+                <a
+                  className="page-link"
+                  tabIndex="-1"
+                  onClick={() => table.previousPage()}
+                >
+                  <ChevronLeft size="15" />
+                </a>
               </li>
               {/* {Array(table.getPageCount()).fill(null).map((value, index) => (
                 ((table.getState().pagination.pageIndex === index) ? (
@@ -169,16 +195,38 @@ export function DataTable({ columns, data, searchColumn }) {
                 ) : null
                 )
               ))} */}
-              <li className= {`page-item ${table.getCanNextPage() === false ? `disabled`: null }`} >
-                <a className="page-link" tabIndex="-1" onClick={() => table.nextPage()} >Next</a>
+              <li
+                className={`page-item ${
+                  table.getCanNextPage() === false ? `disabled` : null
+                }`}
+              >
+                <a
+                  className="page-link"
+                  tabIndex="-1"
+                  onClick={() => table.nextPage()}
+                >
+                  {" "}
+                  <ChevronRight size="15" />{" "}
+                </a>
               </li>
-              <li className= {`page-item ${table.getCanNextPage() === false ? `disabled`: null }`} >
-                <a className="page-link" tabIndex="-1" onClick={() => table.lastPage()} >Last</a>
+              <li
+                className={`page-item ${
+                  table.getCanNextPage() === false ? `disabled` : null
+                }`}
+              >
+                <a
+                  className="page-link"
+                  tabIndex="-1"
+                  onClick={() => table.lastPage()}
+                >
+                  {" "}
+                  <ChevronsRight size="15" />{" "}
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      </>
+    </>
   );
 }

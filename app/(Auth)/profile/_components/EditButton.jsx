@@ -3,13 +3,13 @@
 import { updateProfileInfo } from '@/lib/getData';
 import { zodResolver } from '@hookform/resolvers/zod';
 import moment from 'moment';
-import { useRouter } from "next/navigation";
+import { z } from "zod";
+// import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const EditButton = ({userInfo}) => {
-    const router = useRouter();
+    // const router = useRouter();
     const [editModal, setEditModal] = useState(false);
 
     const schema = z.object({
@@ -24,10 +24,10 @@ const EditButton = ({userInfo}) => {
     });
 
     const {
-    register,
-    handleSubmit,
-    setError,    
-    formState: { errors, isSubmitting },
+        register,
+        handleSubmit,
+        setError,    
+        formState: { errors, isSubmitting },
     } = useForm ({
         defaultValues: {
             ...userInfo,
@@ -41,7 +41,6 @@ const EditButton = ({userInfo}) => {
             const response = await updateProfileInfo(data);
             
             if (response.status == 'Success') {
-                router.refresh();
                 setEditModal(false);
             }else if(response.errors){
                 for (var index in response.errors) {
@@ -158,7 +157,11 @@ const EditButton = ({userInfo}) => {
                         <div className="modal-footer">
                             <div className="m-r-20">
                             <button className="btn btn-sm" type="button" onClick={() => setEditModal(false)}>Close</button>
-                            <button className="btn btn-primary btn-sm" type="submit" disabled={isSubmitting}>{isSubmitting ? "Loading..." : "Save"}</button>
+                            <button className="btn btn-primary btn-sm" type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? (
+                                    <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                ) : "Save"}
+                                </button>
                         </div></div>
                     </form>
                 </div>

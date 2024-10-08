@@ -1,5 +1,5 @@
 import { getUserAnalytics, loginUserData } from '@/lib/getData';
-import Image from 'next/image';
+import ChangeAvatar from './ChangeAvatar';
 import EditButton from './EditButton';
 
 export const UserInfo = async () => {
@@ -26,12 +26,7 @@ export const UserInfo = async () => {
                             <div className="user-profile mb-4">
                                 <div className="hovercard text-center">
                                     <div className="user-image">
-                                        <div className="avatar">
-                                            <Image alt="" src={userInfo?.avatar} height={50} width={50} />
-                                        </div>
-                                        {/* <div className="icon-wrapper btn-xs">
-                                            <i className="icofont icofont-pencil-alt-5"></i>
-                                        </div> */}
+                                        <ChangeAvatar currentAvatar={userInfo?.avatar} />
                                     </div>
                                 </div>    
                             </div>
@@ -63,7 +58,7 @@ export const UserInfo = async () => {
                             </div>                            
                         </div>                            
 
-                        <div className="col-xl-4 col-md-4 col-sm-12 ">                            
+                        <div className="col-xl-4 col-md-4 col-sm-12 border_rt_lt">                            
                             <ul className="user_wrapper">
                                 <li><span className="user_info_icon"></span><span>{userInfo?.name}</span></li>
                                 <li><span className="sms_info_icon"></span><span>{userInfo?.email}</span></li>

@@ -24,6 +24,7 @@ import "@/public/assets/css/style.css";
 import "@/public/assets/css/vendors/calendar.css";
 import "@/public/assets/icomoon/style.css";
 
+import LoggedUserProvider from '@/components/LoggedUserProvider';
 import { NavBar } from "@/components/NavBar";
 import { SideBar } from '@/components/SideBar';
 import { SessionProvider } from 'next-auth/react';
@@ -40,35 +41,37 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider>
-          <div className="loader-wrapper">
-            <div className="loader loader-1">
-              <div className="loader-outter"></div>
-              <div className="loader-inner"></div>
-              <div className="loader-inner-1"></div>
+          <LoggedUserProvider>
+            <div className="loader-wrapper">
+              <div className="loader loader-1">
+                <div className="loader-outter"></div>
+                <div className="loader-inner"></div>
+                <div className="loader-inner-1"></div>
+              </div>
             </div>
-          </div>
-          <div className="tap-top">
-            <ChevronsUp />
-          </div>
+            <div className="tap-top">
+              <ChevronsUp />
+            </div>
 
-          <div className="page-wrapper compact-wrapper" id="pageWrapper">
-            <div className="page-body-wrapper horizontal-menu">
-              <SideBar />
-              <div className="page-body">            
-                <div className="container-fluid">
-                  <div className="row starter-main">
-                    <div className="col-sm-12">
-                      <div className="card">
-                        <NavBar />
-                        {children}
+            <div className="page-wrapper compact-wrapper" id="pageWrapper">
+              <div className="page-body-wrapper horizontal-menu">
+                <SideBar />
+                <div className="page-body">            
+                  <div className="container-fluid">
+                    <div className="row starter-main">
+                      <div className="col-sm-12">
+                        <div className="card">
+                          <NavBar />
+                          {children}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <BootstrapClient />
+            <BootstrapClient />
+          </LoggedUserProvider>
         </SessionProvider>
       </body>
   </html>

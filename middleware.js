@@ -8,7 +8,6 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
    const { nextUrl } = req;
    const isAuthenticated = !!req.auth;
-   console.log('isAuthenticated', isAuthenticated);
 
    const isPublicRoute = (PUBLIC_ROUTES.find(route => nextUrl.pathname.startsWith(route)));
    

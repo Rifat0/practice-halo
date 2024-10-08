@@ -21,7 +21,7 @@ export const GET = async (request) => {
 
     } catch (err) {
         return new NextResponse(err.message, {
-            status: 500,
-          });
+            status: 500
+        });
     }
 }

@@ -17,10 +17,9 @@ export const {
 
                 try {
                     const response = await login(credentials);
-                    console.log(response);      
-                    if (response.token) {
+                    if (response.access_token) {
                         return {
-                            accessToken: response.token,
+                            accessToken: response.access_token,
                             accessTokenExpires: response.expires_in
                         };
                     } else {

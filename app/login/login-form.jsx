@@ -1,6 +1,5 @@
 "use client";
 
-import { login, test } from '@/lib/getData';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -20,8 +19,8 @@ export function LoginForm() {
     formState: { errors, isSubmitting },
   } = useForm ({
     defaultValues: {
-      email: "test@email.com",
-      password: "123456"
+      email: "test@mail.com",
+      password: "12345678"
     },
     resolver: zodResolver(schema)    
   });
@@ -48,20 +47,7 @@ export function LoginForm() {
     }
   }
 
-  const checkApi = async () => {
-    let response = await login();
-    console.log(response);
-  }
-
-  const checkApi2 = async () => {
-    let response = await test();
-    console.log(response);
-  }
-
   return (
-    <>
-      <button onClick={checkApi}>Check API</button>
-      <button onClick={checkApi2}>Check 2</button>
     <form className="theme-form row" onSubmit={handleSubmit(onSubmit)}>
       <h4>Sign in to your account</h4>
       <p>Enter your email & password to login</p>
@@ -102,12 +88,12 @@ export function LoginForm() {
         </a>
         <div className="text-end mt-3">
           <button className="btn btn-primary btn-block w-100" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Loading..." : "Sign in"}
+            {isSubmitting ? (
+              <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            ) : "Sign in"}
           </button>
         </div>
       </div>
     </form>
-
-    </>
   );
 }

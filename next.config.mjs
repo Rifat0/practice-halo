@@ -15,7 +15,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'clinic.googchecker.com',
-        port: '80',
+        port: '',
         pathname: '/**',
       },
     ],
